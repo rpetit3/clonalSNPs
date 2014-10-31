@@ -1,4 +1,4 @@
 clonalSNPs
 ==========
-Depict clonal divergence of S.aureas strains by comparing SNPs profile of different S.aureas strains to a reference strain
+Depict clonal divergence of S.aureus strains by comparing SNPs profile of related S.aureus strains to a reference strain
 
