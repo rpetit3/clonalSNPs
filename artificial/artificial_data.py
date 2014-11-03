@@ -5,7 +5,6 @@ def randomDNA(k):
 	dna = ''
 	for i in range(k):
 		dna = dna + random.choice('ATCG')
-		
 	return dna
 
 
