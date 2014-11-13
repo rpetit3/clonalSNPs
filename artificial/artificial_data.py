@@ -48,8 +48,10 @@ def consensusDNA(dnalist):
                 if current[i] == j:
                     counts[j] = counts[j] + 1
         for char in 'ATCG':
+            # add only the left most base in 'ATCG' if more two or more bases have same max count, need to generate list of consensus sequence or use probabilistic method
             if counts[char] == max(counts.values()):
                 consensus = consensus + char
+                break
     return consensus
                 
             
