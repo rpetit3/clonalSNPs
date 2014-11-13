@@ -17,6 +17,16 @@ def mutateDNA(s,p):
 		else:
 			new = new + s[i]
 	return new
+	
+# return list of n mutated strings starting with a DNA sequence s with probability p that each base in the DNA string mutates
+def mutateDNAlist(s, p, n):
+    dna  = s
+    list = []
+    list.append(s)
+    for i in range(n):
+        dna = mutateDNA(dna,p)
+        list.append(dna)
+    return list
 
 # provide a list of DNAs and probability p that each base in a DNA sequence mutates and return new list of DNAs
 def mutatelist(dnalist, p):
@@ -43,7 +53,7 @@ def consensusDNA(dnalist):
     return consensus
                 
             
-    
+   
         
 	
 	
