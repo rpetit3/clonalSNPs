@@ -1,3 +1,7 @@
+''' 
+Functions to generate strings corresponding to artificial DNA sequences, mutate DNA sequences based on given probability, and generate a consensus DNA sequence provided a list of DNA sequences.
+'''
+
 import random
 
 # create artificial DNA strings of length k 
