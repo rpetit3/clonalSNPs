@@ -57,7 +57,15 @@ def consensusDNA(dnalist):
                 consensus = consensus + char
                 break
     return consensus
-                
+
+# find number of mismatches, Hamming distance, between two DNA sequences x and y of equal length. For Python 3.3 +, Hamming sitance is implemented, use import distance, distance.hamming().
+def hamming_distance2(x, y):
+    assert len(x) == len(y)
+    mismatches = 0
+    for i in range(len(x)):
+        if x[i] != y[i]:
+            mismatches = mismatches + 1
+    return mismatches
             
    
         
