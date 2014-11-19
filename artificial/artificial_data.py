@@ -66,8 +66,17 @@ def hamming_distance2(x, y):
         if x[i] != y[i]:
             mismatches = mismatches + 1
     return mismatches
-            
-   
+ 
+# Hamming distance between DNA sequence x and a list of DNA sequences
+def hamming_distance_list(x, dnalist):
+    # dict to store Hamming distance from x
+    distance = {} 
+    for i in range(len(dnalist)):
+    	# calculate Hamming distance between x and ith sequence in dnalist
+        d = hamming_distance2(x, dnalist[i])  
+        # search for key d in dict or set d to be a default key if not already in dict, add ith sequence in dnalist to key
+        distance.setdefault(d,[]).append(dnalist[i])
+    return distance
         
 	
 	
