@@ -67,16 +67,22 @@ def hamming_distance2(x, y):
             mismatches = mismatches + 1
     return mismatches
  
-# Hamming distance between DNA sequence x and a list of DNA sequences
+# return a list of Hamming distance between each DNA sequence in a list of DNA sequences
 def hamming_distance_list(x, dnalist):
-    # dict to store Hamming distance from x
-    distance = {} 
-    for i in range(len(dnalist)):
-    	# calculate Hamming distance between x and ith sequence in dnalist
-        d = hamming_distance2(x, dnalist[i])  
-        # search for key d in dict or set d to be a default key if not already in dict, add ith sequence in dnalist to key
-        distance.setdefault(d,[]).append(dnalist[i])
-    return distance
+    # list to store distances for each sequence from all sequences in dnalist
+    distance_list = []
+    for seq in dnalist: 
+        # dict to store Hamming distance from current sequence
+        distance = {} 
+        for i in range(len(dnalist)):
+            d = hamming_distance2(x, dnalist[i])  
+            distance.setdefault(d,[]).append(dnalist[i])
+        distance_list.append(distance)
+    k = 0
+    for seq in dnalist:
+        print 'closest sequences to ' , seq, ' in list are ', distance_list[k]
+        k = k + 1
+    return distance_list
         
 	
 	
