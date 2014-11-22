@@ -40,7 +40,7 @@ def mutatelist(dnalist, p):
         newlist.append(mutateDNA(s,p))
     return newlist
             
-# find consensus sequence given list of DNAs assuming all DNAs are equal length (may be slow for large inputs)
+# find consensus sequence given list of DNAs assuming all DNAs are of equal length (may be slow for large inputs)
 def consensusDNA(dnalist):
     consensus = ''
     for i in range(len(dnalist[0])):
@@ -58,7 +58,7 @@ def consensusDNA(dnalist):
                 break
     return consensus
 
-# find number of mismatches, Hamming distance, between two DNA sequences x and y of equal length. For Python 3.3 +, Hamming sitance is implemented, use import distance, distance.hamming().
+# find number of mismatches, Hamming distance, between two DNA sequences x and y of equal length. For Python 3.3 +, Hamming distance has been implemented, use import distance, distance.hamming().
 def hamming_distance2(x, y):
     assert len(x) == len(y)
     mismatches = 0
