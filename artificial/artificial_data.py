@@ -85,27 +85,28 @@ def hamming_distance_list(x, dnalist):
     return distance_list
         
 	
-# Given a list of sequences, remove common SNPs in all sequence 
+# Given a list of sequences assuming all of equal length, remove common SNPs in all sequence 
 def remove_multiple_snps(dnalist):
 	# copy list of sequnces
-    newlist = dnalist
+    newlist = dnalist[:]
+    # go over all columns in the sequence
     for i in range(len(dnalist[0])):
-        # dict to count number of ATCGs in each ith position of the current DNA, empty string and list corresponding to bases at the current position
-        counts = {'A': 0, 'T': 0, 'C': 0, 'G': 0}
-        bases_in_this_column = ''
-        # list of nucleotides in current column for each sequence
+        # list of nucleotides in current column for all sequences
         column_list = []
         for k in range(len(dnalist)):
             current = dnalist[k]
-            bases_in_this_column =  bases_in_this_column + current[i]
             column_list.append(current[i])
-        # print column_list
-        # if the current columns have the same nucleotide, remove current column from all sequences
-        if len(list(set(column_list))) == 1:
-            sublist = newlist
+        # if the column has the same nucleotide, remove column from all sequences
+        if column_list.count('A') == len(column_list) or column_list.count('T') == len(column_list) or column_list.count('C') == len(column_list) or column_list.count('G') == len(column_list):
+            # copy current list
+            sublist = newlist[:]
+            # clear current list
             del newlist[:]
+            # use copy of current list to create new list by removing nucleotide in the column for all sequences
             for k in range(len(dnalist)):
-                # fix remove
+                newlist.append(sublist[k][:i] + sublist[k][i+1:])
+            # print 'enter' 
+            return remove_multiple_snps(newlist)
     return newlist
 
 
