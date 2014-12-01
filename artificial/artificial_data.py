@@ -84,12 +84,11 @@ def hamming_distance_list(x, dnalist):
         k = k + 1
     return distance_list
         
-	
-# Given a list of sequences assuming all of equal length, remove common SNPs in all sequence by starting from the ith column 
+# Given a list of sequences assuming all of equal length, remove common SNPs in all sequence starting from the ith column (start from 1st column by default)
 def remove_multiple_snps(dnalist, i = 0):
 	# copy list of sequnces
     newlist = dnalist[:]
-    # go over all columns in the sequence
+    # go over all sequences column by column
     while i < len(dnalist[0]):
         # list of nucleotides in current column for all sequences
         column_list = []
@@ -105,9 +104,11 @@ def remove_multiple_snps(dnalist, i = 0):
             del newlist[:]
             # use copy of current list to create new list by removing nucleotide in the column for all sequences
             for k in range(len(dnalist)):
-                newlist.append(sublist[k][:i-1] + sublist[k][min(i, len(sublist[k])):])
-            # print 'enter' 
-            return remove_multiple_snps(newlist, i)
+                if i == 0:
+                    newlist.append(sublist[k][i+1:])
+                else:
+                    newlist.append(sublist[k][:i-1] + sublist[k][min(i, len(sublist[k])):])
+            return remove_multiple_snps(newlist, i - 1)
     return newlist
 
   
