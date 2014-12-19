@@ -1,5 +1,11 @@
 ''' 
 Functions to generate strings corresponding to artificial DNA sequences, mutate DNA sequences based on given probability, and generate a consensus DNA sequence provided a list of DNA sequences.
+
+Copy and paste the following block of text to run a sample test
+dna1 = randomDNA(10) # generate 10 bp DNA random sequence
+dnalist = mutateDNAlist(dna, 0.5, 5) # generate list of 11 1000 bp DNA sequence (includes dna1). The base of each sequence is generated using the corresponding base in dna1 as a basis with a mutation probability of 0.375 (0.5*0.75). 
+newlist = remove_multiple_snps(dnalist) # remove common bases at the same position for all sequences in the list and return a new list
+hamming_distance_list(newlist) # for each sequence in the new list, display its distance to other sequences
 '''
 
 import random
@@ -68,20 +74,19 @@ def hamming_distance2(x, y):
     return mismatches
  
 # return a list of Hamming distance between each DNA sequence in a list of DNA sequences
-def hamming_distance_list(x, dnalist):
+def hamming_distance_list(dnalist):
     # list to store distances for each sequence from all sequences in dnalist
     distance_list = []
     for seq in dnalist: 
         # dict to store Hamming distance from current sequence
         distance = {} 
         for i in range(len(dnalist)):
-            d = hamming_distance2(x, dnalist[i])  
+            d = hamming_distance2(seq, dnalist[i])  
+            # setdefault() is similar to get(), but will set dict[key]=default if key is not already in dict
             distance.setdefault(d,[]).append(dnalist[i])
         distance_list.append(distance)
-    k = 0
-    for seq in dnalist:
-        print 'closest sequences to ' , seq, ' in list are ', distance_list[k]
-        k = k + 1
+    for k in range(len(distance_list)):
+        print 'The sequences in increasing distance from ',distance_list[k][0], ' are :', distance_list[k]
     return distance_list
         
 # Given a list of sequences assuming all of equal length, remove common SNPs in all sequence starting from the ith column (start from 1st column by default)
