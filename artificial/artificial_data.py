@@ -2,13 +2,14 @@
 Functions to generate strings corresponding to artificial DNA sequences, mutate DNA sequences based on given probability, and generate a consensus DNA sequence provided a list of DNA sequences.
 
 Copy and paste the following block of text to run a sample test
-dna1 = randomDNA(10) # generate 10 bp DNA random sequence
-dnalist = mutateDNAlist(dna, 0.5, 5) # generate list of 11 1000 bp DNA sequence (includes dna1). The base of each sequence is generated using the corresponding base in dna1 as a basis with a mutation probability of 0.375 (0.5*0.75). 
+dna1 = randomDNA(1000) # generate 1000 bp DNA random sequence
+dnalist = mutateDNAlist(dna1, 0.5, 10) # generate list of 11 1000 bp DNA sequence (includes dna1). The base of each sequence is generated using the corresponding base in dna1 as a basis with a mutation probability of 0.375 (0.5*0.75). 
 newlist = remove_multiple_snps(dnalist) # remove common bases at the same position for all sequences in the list and return a new list
 hamming_distance_list(newlist) # for each sequence in the new list, display its distance to other sequences
 '''
 
 import random
+import timeit
 
 # create artificial DNA strings of length k 
 def randomDNA(k):
