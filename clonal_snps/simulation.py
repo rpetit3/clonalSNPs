@@ -1,3 +1,9 @@
+#! /usr/bin/env python
+"""
+    simulation.py.
+
+    A group of functions to simulate clonal SNPs.
+"""
 '''
 Functions to generate strings corresponding to artificial DNA sequences, mutate
 DNA sequences based on given probability, and generate a consensus DNA sequence
@@ -14,12 +20,17 @@ newlist = remove_multiple_snps(dnalist) # remove common bases at the same
 hamming_distance_list(newlist) # for each sequence in the new list, display its
           distance to other sequences
 '''
-import random
+import numpy as np
+import random as r
 
 
 def random_dna(k):
-    """ Create a random DNA sequence of length 'k'. """
-    return ''.join([random.choice('ATGC') for i in range(k)])
+    """
+    Create a random DNA sequence of length 'k'.
+
+    Returns the sequence as a list.
+    """
+    return [r.choice('ATGC') for i in xrange(k)]
 
 
 def mutate_dna(s, p):
@@ -27,16 +38,11 @@ def mutate_dna(s, p):
     Randomly mutate a DNA sequence.
 
     Provide a DNA sequence and probability p that each base in DNA sequence
-    mutates and return a new sequence
+    mutates and return a new sequence as a list.
     """
-    mutated_seq = []
-    for i in range(len(s)):
-        if random.random() <= p:
-            mutated_seq.append(random.choice('ATCG'))
-        else:
-            mutated_seq.append(s[i])
-
-    return ''.join(mutated_seq)
+    return [r.choice('ATGC') if r.random() <= p else s[i]
+            for i
+            in xrange(len(s))]
 
 
 def mutate_dna_list(dna, p, n):
@@ -46,10 +52,9 @@ def mutate_dna_list(dna, p, n):
     Return list of 'n' mutated strings starting with a DNA sequence 'dna' with
     probability 'p' that each base in the DNA string mutates.
     """
-    mutated_seqs = [mutate_dna(dna, p) for i in range(n)]
+    mutated_seqs = [mutate_dna(dna, p) for i in xrange(n)]
     mutated_seqs.insert(0, dna)
-
-    return mutated_seqs
+    return np.array(mutated_seqs)
 
 
 def find_identical_snps(seqs):
@@ -60,12 +65,17 @@ def find_identical_snps(seqs):
     True then this position is identical in all sequences, else False at least
     one seqeunce in the group is different.
     """
-    position_identity = []
-    for i in range(len(seqs[0])):
-        position_identity.append(len({c[i] for c in seqs}) == 1)
+    return np.all(seqs == seqs[0, :], axis=0)
 
-    return position_identity
 
+def remove_identical_snps(seqs, identical):
+    """
+    Remove positions that are identical across all sequences.
+
+    Return a list of sequences which contain SNPs.
+    """
+    uncommon_pos = np.where(identical == 0)[0]
+    return seqs[:, uncommon_pos]
 
 '''
 def remove_multiple_snps(dnalist, i=0):
